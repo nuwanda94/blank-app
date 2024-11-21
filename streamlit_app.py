@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 
-st.title("🎈 My new app")
+st.title("Shrinkage Tracker app")
 st.write(
     "Shrinkage Tracker Upload Excel File, head over to [docs.streamlit.io](https://docs.streamlit.io/)."
 )
