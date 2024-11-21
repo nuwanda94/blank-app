@@ -3,7 +3,7 @@ import pandas as pd
 
 st.title("🎈 My new app")
 st.write(
-    "Shrinkage Tracker Upload, head over to [docs.streamlit.io](https://docs.streamlit.io/)."
+    "Shrinkage Tracker Upload Excel File, head over to [docs.streamlit.io](https://docs.streamlit.io/)."
 )
 # Upload Excel File
 uploaded_file = st.file_uploader("Upload an Excel file (single sheet)", type=["xlsx", "xls"])
