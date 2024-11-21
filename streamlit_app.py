@@ -20,5 +20,5 @@ if uploaded_file:
             df = df.drop_duplicates()
             st.write("**Duplicates removed. Updated Data:**")
             st.dataframe(df.head())
-     except Exception as e:
+    except Exception as e:
         st.error(f"An error occurred: {e}")
