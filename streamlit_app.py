@@ -49,24 +49,27 @@ with tabs[0]:
                 age = st.number_input(f"Age for Record {i + 1}", min_value=0, step=1, key=f"age_{i}")
                 new_data.append({"Name": name, "Age": age})
             
-            # Step 3: Submit button for previewing entries
+            # Submit button for previewing entries
             preview_submit = st.form_submit_button("Preview Entries")
 
-            if preview_submit:
-                # Prepare the data for preview
-                preview_data = pd.DataFrame(new_data)
-                st.write("### Editable Preview")
+        if preview_submit:
+            # Prepare the data for preview
+            preview_data = pd.DataFrame(new_data)
+            st.write("### Editable Preview")
 
-                # Editable inputs for previewed data
-                edited_data = []
-                for idx, row in preview_data.iterrows():
-                    st.write(f"### Edit Record {idx + 1}")
-                    edit_name = st.text_input(f"Edit Name for Record {idx + 1}", value=row["Name"], key=f"edit_name_{idx}")
-                    edit_age = st.number_input(f"Edit Age for Record {idx + 1}", value=row["Age"], min_value=0, step=1, key=f"edit_age_{idx}")
-                    edited_data.append({"Name": edit_name, "Age": edit_age})
+            # Editable inputs for previewed data
+            edited_data = []
+            for idx, row in preview_data.iterrows():
+                st.write(f"### Edit Record {idx + 1}")
+                edit_name = st.text_input(f"Edit Name for Record {idx + 1}", value=row["Name"], key=f"edit_name_{idx}")
+                edit_age = st.number_input(f"Edit Age for Record {idx + 1}", value=row["Age"], min_value=0, step=1, key=f"edit_age_{idx}")
+                edited_data.append({"Name": edit_name, "Age": edit_age})
 
-                # Step 4: Validate edited data and add to the dataset
-                if st.button("Confirm and Add Records"):
+            # Step 4: Validate edited data and add to the dataset
+            with st.form(key="confirm_form"):
+                confirm_submit = st.form_submit_button("Confirm and Add Records")
+
+                if confirm_submit:
                     errors = []
                     valid_entries = []
                     for i, entry in enumerate(edited_data):
@@ -122,34 +125,4 @@ with tabs[2]:
             updated_age = st.number_input(
                 "Updated Age", value=entry_to_update["Age"], min_value=0, step=1, key="updated_age"
             )
-            update_submitted = st.form_submit_button("Update Entry")
-
-            if update_submitted:
-                validation_error = validate_name(updated_name)
-                if validation_error:
-                    st.error(validation_error)
-                else:
-                    st.session_state.data.loc[
-                        st.session_state.data["ID"] == selected_id, ["Name", "Age"]
-                    ] = [updated_name.strip(), updated_age]
-                    st.success("Entry updated successfully!")
-
-# Delete Tab
-with tabs[3]:
-    st.header("Delete Entry")
-    if st.session_state.data.empty:
-        st.info("No entries available to delete.")
-    else:
-        with st.form(key="delete_form"):
-            selected_id = st.selectbox(
-                "Select ID to delete",
-                st.session_state.data["ID"],
-                key="delete_id"
-            )
-            delete_submitted = st.form_submit_button("Delete Entry")
-
-            if delete_submitted:
-                st.session_state.data = st.session_state.data[
-                    st.session_state.data["ID"] != selected_id
-                ]
-                st.success("Entry deleted successfully!")
+            update_submitted = st
